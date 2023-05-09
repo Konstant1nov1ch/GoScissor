@@ -10,8 +10,7 @@ import (
 func CreateToken(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var input struct {
-			FullURL  string `json:"full_url" binding:"required"`
-			ShortURL string `json:"short_url" binding:"required"`
+			FullURL string `json:"full_url" binding:"required"`
 		}
 
 		if err := c.ShouldBindJSON(&input); err != nil {
@@ -21,7 +20,7 @@ func CreateToken(db *gorm.DB) gin.HandlerFunc {
 
 		token := models.Token{
 			FullURL:  input.FullURL,
-			ShortURL: input.ShortURL,
+			ShortURL: models.GenerateShortURL(),
 		}
 
 		if err := db.Create(&token).Error; err != nil {
