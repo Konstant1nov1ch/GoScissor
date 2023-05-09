@@ -1,5 +1,5 @@
 # GoScissor
-Simple web API service for trimming links (Under development) 
+Simple web API service for trimming links (In development) 
 
 Example http://localhost:8080/admin/tokens
 
