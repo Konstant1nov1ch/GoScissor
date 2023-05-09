@@ -9,6 +9,10 @@ import (
 
 func Admin(db *gorm.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		if db == nil {
+			c.String(http.StatusInternalServerError, "500 internal server error")
+			return
+		}
 		var tokens []models.Token
 		if err := db.Find(&tokens).Error; err != nil {
 			c.String(http.StatusInternalServerError, "500 internal server error")

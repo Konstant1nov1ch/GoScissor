@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.title}}</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>{{.title}}</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Full URL</th>
+        <th>Short URL</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .tokens}}
+    <tr>
+        <td>{{.ID}}</td>
+        <td>{{.FullURL}}</td>
+        <td>{{.ShortURL}}</td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+</body>
+</html>

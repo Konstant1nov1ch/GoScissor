@@ -19,9 +19,12 @@ func main() {
 	db.AutoMigrate(&models.Token{})
 
 	router := gin.Default()
+	// указываем директорию с шаблонами HTML
+	router.LoadHTMLGlob("templates/*.html")
 
-	router.GET("/:short_url", Redirect(db))
+	// определяем маршрут для /admin/tokens
 	router.GET("/admin/tokens", Admin(db))
+	router.GET("/:short_url", Redirect(db))
 	router.POST("/admin/tokens", CreateToken(db))
 
 	router.Run(":8080")
