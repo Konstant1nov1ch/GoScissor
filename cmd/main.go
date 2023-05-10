@@ -29,12 +29,12 @@ func main() {
 
 	router := gin.Default()
 	// указываем директорию с шаблонами HTML
-	router.LoadHTMLGlob("templates/*.html")
+	router.LoadHTMLGlob("web/templates/*.html")
 
 	// определяем маршрут для /admin/tokens
 	router.GET("/admin/tokens", Admin(db))
-	router.GET("/:short_url", Redirect(db, cache))
-	router.POST("/admin/tokens", CreateToken(db, cache))
+	router.GET(":short_url", Redirect(db, cache))
+	router.POST("/sci", CreateToken(db, cache))
 
 	err1 := router.Run(":8080")
 	if err1 != nil {

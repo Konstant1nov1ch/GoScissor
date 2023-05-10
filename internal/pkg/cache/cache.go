@@ -20,7 +20,7 @@ type Cache struct {
 
 type CacheItem struct {
 	Key       string
-	Value     string // Сокращенная ссылка
+	Value     string
 	AccessCnt int
 }
 
