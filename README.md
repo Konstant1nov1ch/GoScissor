@@ -16,6 +16,6 @@ At the moment, the service supports 3 types of requests:
 
 I added a two-level algorithm caches 2Q on a screenshot can be seen that the difference redirect when you call from the cache is 31 times faster (I think it's a success)!
 
-Pruf: 
+Proof: 
 
 ![image](https://github.com/Konstant1nov1ch/GoScissor/assets/105445251/e50d6bd4-7553-4943-98b4-c7e581ae7a91)
