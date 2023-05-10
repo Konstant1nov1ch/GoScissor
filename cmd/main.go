@@ -1,12 +1,14 @@
 package main
 
 import (
+	"GoScissor/internal/cache"
 	. "GoScissor/internal/handlers"
-	"GoScissor/internal/models"
+	. "GoScissor/internal/models"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"log"
+	"time"
 )
 
 func main() {
@@ -14,9 +16,16 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer func(db *gorm.DB) {
+		err := db.Close()
+		if err != nil {
 
-	db.AutoMigrate(&models.Token{})
+		}
+	}(db)
+
+	db.AutoMigrate(&Token{})
+
+	cache := cache.NewCache(10, 100, time.Hour*24)
 
 	router := gin.Default()
 	// указываем директорию с шаблонами HTML
@@ -24,8 +33,11 @@ func main() {
 
 	// определяем маршрут для /admin/tokens
 	router.GET("/admin/tokens", Admin(db))
-	router.GET("/:short_url", Redirect(db))
-	router.POST("/admin/tokens", CreateToken(db))
+	router.GET("/:short_url", Redirect(db, cache))
+	router.POST("/admin/tokens", CreateToken(db, cache))
 
-	router.Run(":8080")
+	err1 := router.Run(":8080")
+	if err1 != nil {
+		return
+	}
 }

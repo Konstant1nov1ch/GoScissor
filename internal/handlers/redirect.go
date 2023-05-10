@@ -1,15 +1,24 @@
 package handlers
 
 import (
+	"GoScissor/internal/cache"
 	"GoScissor/internal/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"net/http"
 )
 
-func Redirect(db *gorm.DB) gin.HandlerFunc {
+func Redirect(db *gorm.DB, cache *cache.Cache) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		shortURL := c.Param("short_url")
+
+		// Пытаемся получить full_url по short_url из кэша
+		if fullURL := cache.Get(shortURL); fullURL != nil {
+			fmt.Println("Hello from 2Q Cache!")
+			c.Redirect(http.StatusMovedPermanently, fullURL.(string))
+			return
+		}
 
 		var token models.Token
 		if err := db.Where(&models.Token{ShortURL: shortURL, IsActive: true}).First(&token).Error; err != nil {
@@ -26,6 +35,9 @@ func Redirect(db *gorm.DB) gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "internal server error"})
 			return
 		}
+
+		// Обновляем кэш при редиректе
+		cache.Set(shortURL, token.FullURL)
 
 		c.Redirect(http.StatusMovedPermanently, token.FullURL)
 	}

@@ -1,6 +1,7 @@
 package test
 
 import (
+	"GoScissor/internal/cache"
 	"GoScissor/internal/handlers"
 	"GoScissor/internal/models"
 	"bytes"
@@ -8,6 +9,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -17,6 +19,7 @@ import (
 
 func TestGenerateShortURLHandler(t *testing.T) {
 	db, err := gorm.Open("sqlite3", ":memory:")
+	cache := cache.NewCache(10, 100, time.Minute)
 	if err != nil {
 		t.Fatalf("failed to open database: %v", err)
 	}
@@ -25,7 +28,7 @@ func TestGenerateShortURLHandler(t *testing.T) {
 	db.AutoMigrate(&models.Token{})
 
 	r := gin.Default()
-	r.POST("/admin/tokens", handlers.CreateToken(db))
+	r.POST("/admin/tokens", handlers.CreateToken(db, cache))
 
 	body := map[string]string{
 		"full_url": "https://t.me/Algoru_bot",
