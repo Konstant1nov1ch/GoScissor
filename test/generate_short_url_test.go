@@ -1,9 +1,9 @@
 package test
 
 import (
-	"GoScissor/internal/cache"
 	"GoScissor/internal/handlers"
 	"GoScissor/internal/models"
+	"GoScissor/internal/pkg/cache"
 	"bytes"
 	"encoding/json"
 	"net/http"

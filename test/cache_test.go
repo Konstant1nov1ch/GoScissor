@@ -1,7 +1,7 @@
 package test
 
 import (
-	"GoScissor/internal/cache"
+	"GoScissor/internal/pkg/cache"
 	"testing"
 	"time"
 )

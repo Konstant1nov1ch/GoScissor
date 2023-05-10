@@ -1,9 +1,9 @@
 package main
 
 import (
-	"GoScissor/internal/cache"
 	. "GoScissor/internal/handlers"
 	. "GoScissor/internal/models"
+	"GoScissor/internal/pkg/cache"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"

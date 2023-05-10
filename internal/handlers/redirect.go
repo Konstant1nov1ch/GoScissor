@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"GoScissor/internal/cache"
 	"GoScissor/internal/models"
+	"GoScissor/internal/pkg/cache"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"

@@ -1,9 +1,9 @@
 package test
 
 import (
-	"GoScissor/internal/cache"
 	"GoScissor/internal/handlers"
 	"GoScissor/internal/models"
+	"GoScissor/internal/pkg/cache"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"

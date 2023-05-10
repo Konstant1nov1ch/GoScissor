@@ -13,22 +13,6 @@ type Token struct {
 	IsActive      bool   `gorm:"default:true"`
 }
 
-func (t *Token) BeforeCreate(scope *gorm.Scope) error {
-	for {
-		shortURL := GenerateShortURL()
-		var token Token
-		if result := scope.DB().Where(&Token{ShortURL: shortURL}).First(&token); result.Error != nil {
-			if result.RecordNotFound() {
-				t.ShortURL = shortURL
-				break
-			} else {
-				return result.Error
-			}
-		}
-	}
-	return nil
-}
-
 func GenerateShortURL() string {
 	characters := []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 	length := 7
