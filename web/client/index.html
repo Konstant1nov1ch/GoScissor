@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>URL Shortener</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>URL Shortener</h1>
+
+<h2>Create Short URL</h2>
+<input type="text" id="fullUrlInput" placeholder="Enter Full URL">
+<button onclick="createShortUrl()">Create</button>
+
+<h2>Short URL</h2>
+<p id="shortUrl"></p>
+
+<script>
+  function createShortUrl() {
+    var fullUrl = document.getElementById("fullUrlInput").value;
+
+    axios.post("http://localhost:8080/sci", {
+      full_url: fullUrl
+    }, {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+            .then(function(response) {
+              console.log("response:", response);
+              var shortUrl = response.data.data.ShortURL;
+              var shortUrlElement = document.getElementById("shortUrl");
+              shortUrlElement.textContent = shortUrl;
+              console.log("Short URL element:", shortUrlElement);
+              console.log("Short URL:", shortUrl);
+            })
+            .catch(function(error) {
+              console.log("Error:", error);
+            });
+  }
+</script>
+
+</body>
+</html>
