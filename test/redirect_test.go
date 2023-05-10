@@ -15,11 +15,16 @@ import (
 
 func TestRedirectByShortURLHandler(t *testing.T) {
 	db, err := gorm.Open("sqlite3", ":memory:")
-	cache := cache.NewCache(10, 100, time.Minute)
+	newCache := cache.NewCache(10, 100, time.Minute)
 	if err != nil {
 		t.Fatalf("failed to open database: %v", err)
 	}
-	defer db.Close()
+	defer func(db *gorm.DB) {
+		err := db.Close()
+		if err != nil {
+
+		}
+	}(db)
 
 	db.AutoMigrate(&models.Token{})
 
@@ -27,7 +32,7 @@ func TestRedirectByShortURLHandler(t *testing.T) {
 	db.Create(&token)
 
 	r := gin.Default()
-	r.GET("/:short_url", handlers.Redirect(db, cache))
+	r.GET("/:short_url", handlers.Redirect(db, newCache))
 
 	req, err := http.NewRequest("GET", "/"+token.ShortURL, nil)
 	if err != nil {

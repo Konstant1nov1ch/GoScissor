@@ -19,16 +19,21 @@ import (
 
 func TestGenerateShortURLHandler(t *testing.T) {
 	db, err := gorm.Open("sqlite3", ":memory:")
-	cache := cache.NewCache(10, 100, time.Minute)
+	newCache2 := cache.NewCache(10, 100, time.Minute)
 	if err != nil {
 		t.Fatalf("failed to open database: %v", err)
 	}
-	defer db.Close()
+	defer func(db *gorm.DB) {
+		err := db.Close()
+		if err != nil {
+
+		}
+	}(db)
 
 	db.AutoMigrate(&models.Token{})
 
 	r := gin.Default()
-	r.POST("/admin/tokens", handlers.CreateToken(db, cache))
+	r.POST("/sci", handlers.CreateToken(db, newCache2))
 
 	body := map[string]string{
 		"full_url": "https://t.me/Algoru_bot",
@@ -39,7 +44,7 @@ func TestGenerateShortURLHandler(t *testing.T) {
 		t.Fatalf("failed to marshal request body: %v", err)
 	}
 
-	req, err := http.NewRequest("POST", "/admin/tokens", bytes.NewBuffer(reqBody))
+	req, err := http.NewRequest("POST", "/sci", bytes.NewBuffer(reqBody))
 	if err != nil {
 		t.Fatalf("failed to create request: %v", err)
 	}
