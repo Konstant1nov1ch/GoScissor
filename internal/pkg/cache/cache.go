@@ -24,7 +24,7 @@ type CacheItem struct {
 	AccessCnt int
 }
 
-func NewCache(maxSizeL1, maxSizeL2 int, accessTime time.Duration) *Cache {
+func NewCache(maxSizeL1, maxSizeL2 int, accessTime time.Duration) (*Cache, error) {
 	return &Cache{
 		L1:         make(map[string]*list.Element),
 		L1List:     list.New(),
@@ -33,7 +33,7 @@ func NewCache(maxSizeL1, maxSizeL2 int, accessTime time.Duration) *Cache {
 		MaxSizeL1:  maxSizeL1,
 		MaxSizeL2:  maxSizeL2,
 		AccessTime: accessTime,
-	}
+	}, nil
 }
 
 func (c *Cache) Get(key string) interface{} {

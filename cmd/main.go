@@ -26,8 +26,10 @@ func main() {
 
 	db.AutoMigrate(&Token{})
 
-	cache := cache.NewCache(10, 100, time.Minute*30)
-
+	cache, err := cache.NewCache(10, 100, time.Minute*30)
+	if err != nil {
+		log.Println("failed to create cache: " + err.Error())
+	}
 	router := gin.Default()
 	// указываем директорию с шаблонами HTML
 	router.LoadHTMLGlob("web/templates/*.html")

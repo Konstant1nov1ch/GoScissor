@@ -15,9 +15,12 @@ import (
 
 func TestRedirectByShortURLHandler(t *testing.T) {
 	db, err := gorm.Open("sqlite3", ":memory:")
-	newCache := cache.NewCache(10, 100, time.Minute)
 	if err != nil {
 		t.Fatalf("failed to open database: %v", err)
+	}
+	newCache, err := cache.NewCache(10, 100, time.Minute)
+	if err != nil {
+		t.Fatalf("failed to create cache: %v", err)
 	}
 	defer func(db *gorm.DB) {
 		err := db.Close()

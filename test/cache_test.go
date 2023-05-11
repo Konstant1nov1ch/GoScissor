@@ -8,7 +8,10 @@ import (
 
 func TestCache(t *testing.T) {
 	// Создаем новый кэш с максимальными размерами и временем доступа
-	c := cache.NewCache(2, 2, time.Second)
+	c, err := cache.NewCache(2, 2, time.Second)
+	if err != nil {
+		t.Fatalf("failed to create cache: %v", err)
+	}
 
 	// Добавляем элементы в кэш
 	c.Set("key1", "value1")
