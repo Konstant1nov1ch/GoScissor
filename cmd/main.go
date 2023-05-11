@@ -43,15 +43,17 @@ func main() {
 	router.OPTIONS("/sci", func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
+	//ToDO подумать о многопотоке
 
+	// Добавляем обработчик для просмотра списка всех токенов из бд
 	router.GET("/admin/tokens", Admin(db))
+	// Добавляем обработчик для редиректа
 	router.GET("/:short_url", Redirect(db, cache))
-
 	// Добавляем обработчик для запросов POST на путь /sci
 	router.POST("/sci", CreateToken(db, cache))
 
 	err = router.Run(":8080")
 	if err != nil {
-		log.Println(err)
+		log.Println("Failed to create router : ", err)
 	}
 }
