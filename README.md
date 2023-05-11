@@ -22,4 +22,5 @@ Proof:
 
 Right now, the web client works like this:
 
-![image]("https://github.com/Konstant1nov1ch/GoScissor/assets/105445251/ddab7f60-c709-431c-9505-6d78957d00c0")
+![image](https://github.com/Konstant1nov1ch/GoScissor/assets/105445251/2dc77992-ee54-40bc-9cb2-afa7ca2b2154)
+
