@@ -19,3 +19,7 @@ I added a two-level algorithm caches 2Q on a screenshot can be seen that the dif
 Proof: 
 
 ![image](https://github.com/Konstant1nov1ch/GoScissor/assets/105445251/e50d6bd4-7553-4943-98b4-c7e581ae7a91)
+
+Right now, the web client works like this:
+
+![image]("https://github.com/Konstant1nov1ch/GoScissor/assets/105445251/ddab7f60-c709-431c-9505-6d78957d00c0")
