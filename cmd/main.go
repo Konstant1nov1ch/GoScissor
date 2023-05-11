@@ -26,14 +26,14 @@ func main() {
 
 	db.AutoMigrate(&Token{})
 
-	cache := cache.NewCache(10, 100, time.Minute*10)
+	cache := cache.NewCache(10, 100, time.Minute*30)
 
 	router := gin.Default()
 	// указываем директорию с шаблонами HTML
 	router.LoadHTMLGlob("web/templates/*.html")
 
 	router.Use(func(c *gin.Context) {
-		c.Header("Access-Control-Allow-Origin", "*")
+		c.Header("Access-Control-Allow-Origin", "http://localhost:63342")
 		c.Header("Access-Control-Allow-Methods", "POST, GET")
 		c.Header("Access-Control-Allow-Headers", "Content-Type")
 	})

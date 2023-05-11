@@ -27,12 +27,9 @@
       }
     })
             .then(function(response) {
-              console.log("response:", response);
               var shortUrl = response.data.data.ShortURL;
               var shortUrlElement = document.getElementById("shortUrl");
-              shortUrlElement.textContent = shortUrl;
-              console.log("Short URL element:", shortUrlElement);
-              console.log("Short URL:", shortUrl);
+              shortUrlElement.textContent = "http://localhost:8080/" + shortUrl;
             })
             .catch(function(error) {
               console.log("Error:", error);

@@ -1,6 +1,8 @@
 package models
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
 	"github.com/jinzhu/gorm"
 	"math/rand"
 )
@@ -20,5 +22,7 @@ func GenerateShortURL() string {
 	for i := range b {
 		b[i] = characters[rand.Intn(len(characters))]
 	}
-	return string(b)
+	hasher := sha256.New()
+	hasher.Write([]byte(string(b)))
+	return hex.EncodeToString(hasher.Sum(nil))[:4]
 }
