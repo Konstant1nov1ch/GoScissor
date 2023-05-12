@@ -30,9 +30,6 @@ func CreateToken(db *gorm.DB, cache *cache.Cache) gin.HandlerFunc {
 			return
 		}
 
-		// Сохраните сокращенную ссылку в кэше
-		cache.Set(input.FullURL, token.ShortURL)
-
 		c.JSON(http.StatusOK, gin.H{"data": token})
 	}
 }

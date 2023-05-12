@@ -18,7 +18,7 @@ func TestRedirectByShortURLHandler(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to open database: %v", err)
 	}
-	newCache, err := cache.NewCache(10, 100, time.Minute)
+	newCache, err := cache.NewCache(1, 2, time.Second)
 	if err != nil {
 		t.Fatalf("failed to create cache: %v", err)
 	}
@@ -45,7 +45,7 @@ func TestRedirectByShortURLHandler(t *testing.T) {
 	resp := httptest.NewRecorder()
 	r.ServeHTTP(resp, req)
 
-	assert.Equal(t, http.StatusMovedPermanently, resp.Code)
+	assert.Equal(t, http.StatusTemporaryRedirect, resp.Code)
 	assert.Equal(t, "https://example.com", resp.Header().Get("Location"))
 
 	// Повторный запрос должен быть обработан из кэша
@@ -57,7 +57,7 @@ func TestRedirectByShortURLHandler(t *testing.T) {
 	resp = httptest.NewRecorder()
 	r.ServeHTTP(resp, req)
 
-	assert.Equal(t, http.StatusMovedPermanently, resp.Code)
+	assert.Equal(t, http.StatusTemporaryRedirect, resp.Code)
 	assert.Equal(t, "https://example.com", resp.Header().Get("Location"))
 
 	// Запрос с неверным коротким URL должен возвращать ошибку 404

@@ -45,7 +45,7 @@ func (c *Cache) Get(key string) interface{} {
 	}
 
 	if item, ok := c.L2[key]; ok {
-		if time.Since(time.Unix(int64(item.Value.(*CacheItem).AccessCnt), 0)) > c.AccessTime {
+		if time.Since(time.Unix(int64(item.Value.(*CacheItem).AccessCnt), 0)) < c.AccessTime {
 			c.removeL2(item)
 			return nil
 		}

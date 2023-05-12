@@ -16,7 +16,7 @@ func Redirect(db *gorm.DB, cache *cache.Cache) gin.HandlerFunc {
 		// Пытаемся получить full_url по short_url из кэша
 		if fullURL := cache.Get(shortURL); fullURL != nil {
 			fmt.Println("Hello from 2Q Cache!")
-			c.Redirect(http.StatusMovedPermanently, fullURL.(string))
+			c.Redirect(http.StatusTemporaryRedirect, fullURL.(string))
 			return
 		}
 
@@ -39,6 +39,6 @@ func Redirect(db *gorm.DB, cache *cache.Cache) gin.HandlerFunc {
 		// Обновляем кэш при редиректе
 		cache.Set(shortURL, token.FullURL)
 
-		c.Redirect(http.StatusMovedPermanently, token.FullURL)
+		c.Redirect(http.StatusTemporaryRedirect, token.FullURL)
 	}
 }
